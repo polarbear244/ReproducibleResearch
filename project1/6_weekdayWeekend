@@ -1,0 +1,13 @@
+# Re-create `activityDT` if needed
+activityDT <- fread("data/activity.csv")
+activityDT[, date := as.IDate(date, format = "%Y-%m-%d")]
+activityDT[, `weekday or weekend` := fifelse(weekdays(date) %in% c("Saturday", "Sunday"), "weekend", "weekday")]
+
+# Calculate average steps by interval and day type
+IntervalDT <- activityDT[, .(steps = mean(steps, na.rm = TRUE)), by = .(interval, `weekday or weekend`)]
+
+# Plot the average daily steps by weekday/weekend
+ggplot(IntervalDT, aes(x = interval, y = steps, color = `weekday or weekend`)) +
+  geom_line() +
+  labs(title = "Avg. Daily Steps by Weektype", x = "Interval", y = "No. of Steps") +
+  facet_wrap(~`weekday or weekend`, ncol = 1)
