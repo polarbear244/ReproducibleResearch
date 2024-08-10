@@ -1,3 +1,5 @@
+### Mean and median number of steps taken each day
+
 
 | Type of Estimate                       | Mean\_Steps | Median\_Steps |
 |----------------------------------------|-------------|---------------|
